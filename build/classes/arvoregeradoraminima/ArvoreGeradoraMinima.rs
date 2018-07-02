@@ -1,0 +1,2 @@
+ArvoreGeradoraMinima
+ArvoreGeradoraMinima$Edge
