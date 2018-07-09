@@ -1,9 +1,24 @@
+/*
+Disciplina: Algoritmos e Programação III
+Aluno: Guilherme Marcelino Ribeiro
+Trabalho de Grafos: Árvore Geradora Mínima
+
+
+
+Obs.: o arquivo "kruskal.csv" está anexado, porém a entrada é exigida através do console.
+*/
+
 package arvoregeradoraminima;
 
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ *
+ * @author guilh
+ */
 public class ArvoreGeradoraMinima {
     private int numeroDeVertices, numeroDeArestas;
     private int[][] arestasAComparar = new int[100][3];
@@ -13,7 +28,7 @@ public class ArvoreGeradoraMinima {
     public ArvoreGeradoraMinima(int quantidadeDeVertices, int quantidadeDeArestas) {
         numeroDeVertices = quantidadeDeVertices;
         numeroDeArestas = quantidadeDeArestas;
-        vertices = new boolean[quantidadeDeVertices + 1]; //desconsiderar o vertice de indice 0
+        vertices = new boolean[quantidadeDeVertices + 1]; //Nao contar o vertice de indice 0
         arestas = new int[quantidadeDeArestas][3]; //o numero de colunas é fixo "3"
     }
     private void adicionaArestaParaComparar (int verticeInicial,int verticeFinal,int comprimento) {
@@ -24,7 +39,7 @@ public class ArvoreGeradoraMinima {
     }
     protected void adicionaArestaParaComparar (int[] partida) {
         for (int i = 0; i < partida.length; i++) { //corre as partidas
-            for (int j = 0; j < numeroDeArestas; j++) {
+           for (int j = 0; j < numeroDeArestas; j++) {
                 if (arestas[j][0] == partida[i] && vertices[arestas[j][1]] == false) {
                     adicionaArestaParaComparar(arestas[j][0], arestas[j][1], arestas[j][2]);
                 }
@@ -97,6 +112,7 @@ public class ArvoreGeradoraMinima {
         }
     }
     public void leEConstroiTabela() {
+        
         Scanner scan = new Scanner(System.in);
         for (int i = 0; i < numeroDeArestas; i++) {
             int x = scan.nextInt(); //lê o nó inicial e coloca em contagem do 0
@@ -112,11 +128,14 @@ public class ArvoreGeradoraMinima {
         partida.add(1);
         vertices[1] = true;
         for (int i = 0; i < (numeroDeVertices - 1); i++) {
+            for (int j = 0; j < numeroDeArestas; j++) {
             adicionaArestaParaComparar(partida.toArray());
             imprimeMenorCaminho();
             partida.add(menorCaminho()[1]);
             marcaVerticeDoMenorCaminho();
             limpaArestasComparadas();
-        }
+            }
+        }    
     }
+    
 }
