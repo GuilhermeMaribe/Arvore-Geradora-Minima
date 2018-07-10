@@ -37,12 +37,8 @@ public class TesteMain {
                   "10--11 3\n" +
                   "11--12 2");
         Scanner scan = new Scanner(System.in);
-        int numeroDeVertices, numeroDeArestas;
-        System.out.println("Qual o numero de vertices? ");
-        numeroDeVertices = scan.nextInt();
-        System.out.print("Qual o numero de arestas? ");
-        numeroDeArestas = scan.nextInt();
-        System.out.println("Insira os valores da tabela:\n(vertice [espaço] vertice [espaço] comprimento)");
+        int numeroDeVertices=12, numeroDeArestas=21;
+        System.out.println("Insira os valores da tabela:\n(vertice [espaço] vertice [espaço] custo)");
         
                 ArvoreGeradoraMinima g = new ArvoreGeradoraMinima(numeroDeVertices, numeroDeArestas);
         g.leEConstroiTabela();

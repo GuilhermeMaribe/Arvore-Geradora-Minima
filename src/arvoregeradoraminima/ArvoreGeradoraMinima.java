@@ -10,7 +10,8 @@ Obs.: o arquivo "kruskal.csv" está anexado, porém a entrada é exigida atravé
 
 package arvoregeradoraminima;
 
-import static java.lang.Integer.parseInt;
+
+import static java.io.FileDescriptor.in;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ import java.util.Scanner;
  */
 public class ArvoreGeradoraMinima {
     private int numeroDeVertices, numeroDeArestas;
-    private int[][] arestasAComparar = new int[100][3];
+    private int[][] arestasAComparar = new int[21][3];
     private int indiceDoArray = 0;
     private boolean[] vertices;
     private int[][] arestas;
@@ -31,10 +32,10 @@ public class ArvoreGeradoraMinima {
         vertices = new boolean[quantidadeDeVertices + 1]; //Nao contar o vertice de indice 0
         arestas = new int[quantidadeDeArestas][3]; //o numero de colunas é fixo "3"
     }
-    private void adicionaArestaParaComparar (int verticeInicial,int verticeFinal,int comprimento) {
+    private void adicionaArestaParaComparar (int verticeInicial,int verticeFinal,int custo) {
         arestasAComparar[indiceDoArray][0] = verticeInicial;
         arestasAComparar[indiceDoArray][1] = verticeFinal;
-        arestasAComparar[indiceDoArray][2] = comprimento;
+        arestasAComparar[indiceDoArray][2] = custo;
         indiceDoArray++;
     }
     protected void adicionaArestaParaComparar (int[] partida) {
@@ -47,12 +48,14 @@ public class ArvoreGeradoraMinima {
         }
     }
     private void adicionaArestaParaComparar (Object[] partida) {
+        
         for (int i = 0; i < partida.length; i++) { //corre as partidas
+            
             for (int j = 0; j < numeroDeArestas; j++) {
-                if (arestas[j][0] == partida[i] && vertices[arestas[j][1]] == false) {
+                if (arestas[j][0] == Integer.parseInt(partida[i].toString()) && vertices[arestas[j][1]] == false) {
                     adicionaArestaParaComparar(arestas[j][0], arestas[j][1], arestas[j][2]);
                 }
-                if (arestas[j][1] == partida[i] && vertices[arestas[j][0]] == false) {
+                if (arestas[j][1] == Integer.parseInt(partida[i].toString()) && vertices[arestas[j][0]] == false) {
                     adicionaArestaParaComparar(arestas[j][0], arestas[j][1], arestas[j][2]);
                 }
             }
@@ -68,7 +71,7 @@ public class ArvoreGeradoraMinima {
     }
     private int[] menorCaminho() {
         int[] aresta = new int[3];
-        int comp = 9999999;
+        int comp = 9999;
         for (int i = 0; i < arestasAComparar.length && arestasAComparar[i][2] != 0; i++) {
             if (arestasAComparar[i][2] < comp) {
                 aresta[0] = arestasAComparar[i][0];
@@ -111,13 +114,22 @@ public class ArvoreGeradoraMinima {
             System.out.println(" " + arestasAComparar[i][2]);
         }
     }
-    public void leEConstroiTabela() {
-        
+    public void leEConstroiTabela() {        
         Scanner scan = new Scanner(System.in);
         for (int i = 0; i < numeroDeArestas; i++) {
             int x = scan.nextInt(); //lê o nó inicial e coloca em contagem do 0
             int y = scan.nextInt(); //lê o nó final e coloca em contagem do 0
             int z = scan.nextInt(); //lê o custo ambiental
+            
+              /*   
+            int x = in.nextInt();
+            int y = in.nextInt();
+            int z =in.nextInt();             
+            
+            if(in.hasNextLine())in.hasNextLine();//proxima linha
+            */ 
+            
+            
             arestas[i][0] = x; //atribui o indice do vertice inicial
             arestas[i][1] = y; //atribui o inice do vertice final
             arestas[i][2] = z; //atribui o comprimento da aresta
